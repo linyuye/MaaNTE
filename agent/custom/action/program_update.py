@@ -68,6 +68,7 @@ class ProgramUpdate(CustomAction):
             ("release_api", "--release-api"),
             ("manifest_url", "--manifest-url"),
             ("base_url", "--base-url"),
+            ("archive_url", "--archive-url"),
             ("asset_hint", "--asset-hint"),
         ):
             value = params.get(key)

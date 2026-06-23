@@ -26,15 +26,25 @@ class UpdateSource:
     release_api: str | None = None
 
 
+def _request_headers(accept: str | None = None) -> dict:
+    headers = {"User-Agent": "MaaNTE-updater"}
+    if accept:
+        headers["Accept"] = accept
+    token = os.getenv("GITHUB_TOKEN") or os.getenv("GH_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    return headers
+
+
 def _http_get_json(url: str, timeout: int = 20) -> dict:
-    request = Request(url, headers={"Accept": "application/vnd.github+json"})
+    request = Request(url, headers=_request_headers("application/vnd.github+json"))
     with urlopen(request, timeout=timeout) as response:
         return json.loads(response.read().decode("utf-8"))
 
 
 def _http_download(url: str, dest: Path, timeout: int = 60) -> None:
     dest.parent.mkdir(parents=True, exist_ok=True)
-    request = Request(url, headers={"User-Agent": "MaaNTE-updater"})
+    request = Request(url, headers=_request_headers())
     with urlopen(request, timeout=timeout) as response, dest.open("wb") as f:
         shutil.copyfileobj(response, f)
 
@@ -182,6 +192,14 @@ def _download_release_asset(source: UpdateSource, asset_hint: str | None = None)
     return release, archive_path, asset.get("name", "")
 
 
+def _download_archive_url(archive_url: str) -> tuple[Path, str]:
+    archive_name = Path(urlparse(archive_url).path).name or "release-asset"
+    temp_dir = Path(tempfile.mkdtemp(prefix="maante-release-"))
+    archive_path = temp_dir / archive_name
+    _http_download(archive_url, archive_path)
+    return archive_path, archive_name
+
+
 def _extract_archive(archive_path: Path, extract_dir: Path) -> None:
     if archive_path.suffix.lower() == ".zip":
         with zipfile.ZipFile(archive_path) as zf:
@@ -259,6 +277,7 @@ def main() -> int:
     parser.add_argument("--manifest-url", default="")
     parser.add_argument("--release-api", default="")
     parser.add_argument("--base-url", default="")
+    parser.add_argument("--archive-url", default="")
     parser.add_argument("--target-root", default="")
     parser.add_argument("--asset-hint", default="")
     parser.add_argument("--wait-pid", action="append", type=int, default=[])
@@ -281,7 +300,10 @@ def main() -> int:
     elif Path(urlparse(manifest_source_url).path).name == "update-manifest.json":
         base_url = manifest_source_url.rsplit("/", 1)[0] + "/"
     else:
-        _, archive_path, archive_name = _download_release_asset(source, args.asset_hint or manifest.get("artifact_name", ""))
+        if args.archive_url:
+            archive_path, archive_name = _download_archive_url(args.archive_url)
+        else:
+            _, archive_path, archive_name = _download_release_asset(source, args.asset_hint or manifest.get("artifact_name", ""))
         stage_dir = Path(tempfile.mkdtemp(prefix="maante-stage-"))
         _extract_archive(archive_path, stage_dir)
         source_dir = stage_dir

@@ -238,7 +238,7 @@ jobs:
             install-mxu \
             --version "${{ needs.meta.outputs.tag }}" \
             --platform-tag "win-x64" \
-            --variant "-MXU" \
+            --variant=-MXU \
             --artifact-name "MaaNTE-win-${{ matrix.arch }}-${{ needs.meta.outputs.tag }}-MXU"
 
       - uses: actions/upload-artifact@v4

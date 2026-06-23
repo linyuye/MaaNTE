@@ -313,7 +313,17 @@ def main() -> int:
             source_dir=source_dir,
             dry_run=args.dry_run,
         )
-        print(json.dumps({"changed": changed, "count": len(changed), "asset": archive_name}, ensure_ascii=False))
+        print(
+            json.dumps(
+                {
+                    "changed": changed,
+                    "count": len(changed),
+                    "asset": archive_name,
+                    "dry_run": args.dry_run,
+                },
+                ensure_ascii=False,
+            )
+        )
         shutil.rmtree(stage_dir, ignore_errors=True)
         shutil.rmtree(archive_path.parent, ignore_errors=True)
         _restart_program(args.restart, target_root)
@@ -326,7 +336,7 @@ def main() -> int:
         dry_run=args.dry_run,
     )
 
-    print(json.dumps({"changed": changed, "count": len(changed)}, ensure_ascii=False))
+    print(json.dumps({"changed": changed, "count": len(changed), "dry_run": args.dry_run}, ensure_ascii=False))
     _restart_program(args.restart, target_root)
     return 0
 

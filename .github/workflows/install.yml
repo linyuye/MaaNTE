@@ -245,6 +245,7 @@ jobs:
         with:
           name: MaaNTE-win-${{ matrix.arch }}-${{ needs.meta.outputs.tag }}-MXU
           path: "install-mxu"
+          include-hidden-files: true
 
   release:
     if: ${{ needs.meta.outputs.is_release == 'true' }}
@@ -297,6 +298,10 @@ jobs:
             if [[ $artifact_name == *"win"* ]]; then
               echo "Processing Windows artifact: $artifact_name"
               (cd "$f" && zip -r "$release_dir/$artifact_name.zip" .)
+              if [[ $artifact_name == *"-MXU" ]]; then
+                cp "$release_dir/$artifact_name.zip" "$release_dir/MaaNTE-win-x86_64-latest-MXU.zip"
+                echo "Created latest alias: MaaNTE-win-x86_64-latest-MXU.zip"
+              fi
             else
               echo "Processing Unix artifact: $artifact_name"
 
@@ -330,6 +335,10 @@ jobs:
               artifact_name="$(basename "$(dirname "$manifest")")"
               cp "$manifest" "$release_dir/${artifact_name}-update-manifest.json"
               echo "Copied manifest for $artifact_name"
+              if [[ $artifact_name == *"-MXU" ]]; then
+                cp "$manifest" "$release_dir/MaaNTE-win-x86_64-latest-MXU-update-manifest.json"
+                echo "Created latest manifest alias: MaaNTE-win-x86_64-latest-MXU-update-manifest.json"
+              fi
             fi
           done
 

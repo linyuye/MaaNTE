@@ -219,5 +219,7 @@
     "task_online_map_navigation_option_debug_desc": "有効にすると、測位と方向予測のデバッグウィンドウを表示します。",
     "task_online_map_navigation_input_port": "待ち受けポート",
     "task_online_map_navigation_input_frame_interval": "サンプリング間隔 (秒)",
-    "task_online_map_navigation_input_frame_interval_desc": "スクリーンショット測位の最小間隔です。処理側で最低 0.05 秒に制限されます。"
+    "task_online_map_navigation_input_frame_interval_desc": "スクリーンショット測位の最小間隔です。処理側で最低 0.05 秒に制限されます。",
+    "task_program_update_label": "プログラム更新",
+    "task_program_update_desc": "バックグラウンド更新プロセスを起動します。クリック後に MaaNTE を閉じてください。更新完了後、自動再起動を試みます。"
 }

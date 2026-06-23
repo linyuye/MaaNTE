@@ -219,5 +219,7 @@
     "task_online_map_navigation_option_debug_desc": "啟用後顯示定位和方向預測除錯視窗。",
     "task_online_map_navigation_input_port": "監聽連接埠",
     "task_online_map_navigation_input_frame_interval": "取樣間隔 (秒)",
-    "task_online_map_navigation_input_frame_interval_desc": "每次截圖定位之間的最小間隔，最低會限制為 0.05 秒。"
+    "task_online_map_navigation_input_frame_interval_desc": "每次截圖定位之間的最小間隔，最低會限制為 0.05 秒。",
+    "task_program_update_label": "程式更新",
+    "task_program_update_desc": "啟動背景更新程序。請在點擊後關閉 MaaNTE，更新完成後會嘗試自動重新啟動。"
 }

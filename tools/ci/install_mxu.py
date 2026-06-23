@@ -10,6 +10,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(script_dir)
 
 from configure import configure_all_models
+from update_manifest import write_update_manifest
 
 
 def load_json_with_comments(path):
@@ -82,6 +83,10 @@ def install_chores():
             install_path,
         )
 
+    updater_dir = install_path / "tools" / "ci"
+    updater_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(working_dir / "tools" / "ci" / "update_client.py", updater_dir)
+
 
 def install_agent():
     shutil.copytree(
@@ -105,10 +110,22 @@ def install_agent():
         json.dump(interface, f, ensure_ascii=False, indent=4)
 
 
+def install_update_manifest():
+    manifest_path = write_update_manifest(
+        install_path,
+        version=version,
+        platform_tag="win-x64",
+        variant="-MXU",
+        artifact_name=f"MaaNTE-win-x64-{version}-MXU",
+    )
+    print(f"Write update manifest to {manifest_path}")
+
+
 if __name__ == "__main__":
     install_deps()
     install_resource()
     install_chores()
     install_agent()
+    install_update_manifest()
 
     print(f"Install MXU to {install_path} successfully.")

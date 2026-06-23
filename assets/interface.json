@@ -132,6 +132,7 @@
         "resource/tasks/AutonomousDrivingDataset.json",
         // group:UserInfo
         "resource/tasks/SyncCharacterAbilityCityAbility.json",
+        "resource/tasks/ProgramUpdate.json",
         // group:others
         "resource/tasks/Touch.json",
         // preset

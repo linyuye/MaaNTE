@@ -1,0 +1,13 @@
+{
+    "task": [
+        {
+            "name": "ProgramUpdate",
+            "label": "$task_program_update_label",
+            "entry": "ProgramUpdate",
+            "description": "$task_program_update_desc",
+            "group": [
+                "UserInfo"
+            ]
+        }
+    ]
+}

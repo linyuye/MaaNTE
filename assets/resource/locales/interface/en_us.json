@@ -219,5 +219,7 @@
     "task.SyncCharacterAbilityCityAbility.label": "Record Character Life Skills",
     "task.SyncCharacterAbilityCityAbility.description": "Automatically identify life skill levels of all characters and record them in the configuration file.",
     "task.SyncCharacterAbilityCityAbility.option.fresh_record": "Fresh Record",
-    "task.SyncCharacterAbilityCityAbility.option.fresh_record.desc": "Overwrite existing character life skill records<br><span style='color:red'>Note: This will clear all previous records.</span><br><span style='color:orange'>Use this option to clear and overwrite previous content if you find issues with the existing records.</span>"
+    "task.SyncCharacterAbilityCityAbility.option.fresh_record.desc": "Overwrite existing character life skill records<br><span style='color:red'>Note: This will clear all previous records.</span><br><span style='color:orange'>Use this option to clear and overwrite previous content if you find issues with the existing records.</span>",
+    "task_program_update_label": "Program Update",
+    "task_program_update_desc": "Start the background updater. Close MaaNTE after clicking; it will try to restart automatically after the update finishes."
 }

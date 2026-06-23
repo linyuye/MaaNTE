@@ -219,5 +219,7 @@
     "task_online_map_navigation_option_debug_desc": "활성화하면 위치 확인 및 방향 예측 디버그 창을 표시합니다.",
     "task_online_map_navigation_input_port": "수신 포트",
     "task_online_map_navigation_input_frame_interval": "샘플링 간격 (초)",
-    "task_online_map_navigation_input_frame_interval_desc": "스크린샷 위치 확인 사이의 최소 간격입니다. 작업에서 최소 0.05초로 제한됩니다."
+    "task_online_map_navigation_input_frame_interval_desc": "스크린샷 위치 확인 사이의 최소 간격입니다. 작업에서 최소 0.05초로 제한됩니다.",
+    "task_program_update_label": "프로그램 업데이트",
+    "task_program_update_desc": "백그라운드 업데이트 프로세스를 시작합니다. 클릭한 뒤 MaaNTE를 닫으면 업데이트 완료 후 자동 재시작을 시도합니다."
 }

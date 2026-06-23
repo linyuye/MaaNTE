@@ -1,0 +1,14 @@
+{
+    "ProgramUpdate": {
+        "desc": "程序更新",
+        "recognition": "DirectHit",
+        "action": "Custom",
+        "custom_action": "program_update",
+        "custom_action_param": {
+            "owner": "linyuye",
+            "repo": "MaaNTE",
+            "asset_hint": "-MXU"
+        },
+        "next": []
+    }
+}

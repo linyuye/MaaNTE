@@ -231,6 +231,16 @@ jobs:
           rm -rf install-mxu/deps
           echo "Deps directory removed. Package size reduced by ~171MB."
 
+      - name: Generate update manifest
+        shell: bash
+        run: |
+          ./install-mxu/python/python.exe tools/ci/update_manifest.py \
+            install-mxu \
+            --version "${{ needs.meta.outputs.tag }}" \
+            --platform-tag "win-x64" \
+            --variant "-MXU" \
+            --artifact-name "MaaNTE-win-${{ matrix.arch }}-${{ needs.meta.outputs.tag }}-MXU"
+
       - uses: actions/upload-artifact@v4
         with:
           name: MaaNTE-win-${{ matrix.arch }}-${{ needs.meta.outputs.tag }}-MXU
@@ -312,6 +322,14 @@ jobs:
 
               tar -cpzf "$release_dir/$artifact_name.tar.gz" -C "$f" .
               echo "Created archive with preserved permissions: $artifact_name.tar.gz"
+            fi
+          done
+
+          for manifest in "$artifact_dir"/*/update-manifest.json; do
+            if [[ -f "$manifest" ]]; then
+              artifact_name="$(basename "$(dirname "$manifest")")"
+              cp "$manifest" "$release_dir/${artifact_name}-update-manifest.json"
+              echo "Copied manifest for $artifact_name"
             fi
           done
 

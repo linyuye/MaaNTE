@@ -27,6 +27,8 @@ import subprocess
 import urllib.request
 from pathlib import Path
 
+from tools.ci.update_manifest import write_update_manifest
+
 # ---------------------------------------------------------------------------
 # 可配置常量
 # ---------------------------------------------------------------------------
@@ -531,6 +533,19 @@ def step_package(platform_tag, tag, output_dir, mxu=False):
     return pkg_path
 
 
+def step_write_update_manifest(install_dir: Path, platform_tag: str, tag: str, mxu: bool = False):
+    variant = "-MXU" if mxu else ""
+    manifest_path = write_update_manifest(
+        install_dir,
+        version=tag,
+        platform_tag=platform_tag,
+        variant=variant,
+        artifact_name=f"MaaNTE-{platform_tag}-{tag}{variant}",
+    )
+    print(f"  写入更新清单: {manifest_path}")
+    return manifest_path
+
+
 # ========== 主入口 ==========
 
 def main():
@@ -643,8 +658,10 @@ def main():
     # 打包
     if not skip_package:
         if not skip_mfa:
+            step_write_update_manifest(INSTALL_DIR, platform_tag, args.tag, mxu=False)
             step_package(platform_tag, args.tag, args.output_dir)
         if not skip_mxu:
+            step_write_update_manifest(INSTALL_MXU_DIR, platform_tag, args.tag, mxu=True)
             step_package(platform_tag, args.tag, args.output_dir, mxu=True)
 
     print("\n" + "=" * 60)
